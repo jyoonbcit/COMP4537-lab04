@@ -1,4 +1,4 @@
-const endPointRoot = "https://comp-4537-lab04.vercel.app/api/store";
+const endPointRoot = "https://comp-4537-lab04.netlify.app/server.js";
 class Search {
     getResults(query) {
         let params = "?word=" + query;
