@@ -3,6 +3,7 @@ const url = require('url');
 const message = require("./user.js");
 
 let dictionary = [];
+let requestCount = 0;
 
 http.createServer((req, res) => {
     res.writeHead(200, {
@@ -10,6 +11,7 @@ http.createServer((req, res) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST"
     })
+    requestCount++;
     if (req.method === "GET") {
         let q = url.parse(req.url, true);
         if (q.query.word) {
@@ -42,7 +44,7 @@ http.createServer((req, res) => {
                 res.end(`${word}: ${definition}`);
             } else {
                 // If dictionary is not empty, check if word exists
-                dictionary.forEach (entry => {
+                dictionary.forEach(entry => {
                     console.log(entry);
                     let wordKey = entry.split(":")[0];
                     console.log(wordKey);
@@ -52,7 +54,7 @@ http.createServer((req, res) => {
                     } else {
                         // If word does not exist, add word
                         dictionary.push(`${word}:${definition}`);
-                        res.end(`${word}: ${definition}`);
+                        res.end(`${message.count}.replace(%s, ${requestCount})` + `${message.success}.replace(%s, %t, ${word}, ${definition})`);
                     }
                 });
             }
