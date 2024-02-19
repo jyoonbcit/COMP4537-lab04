@@ -1,7 +1,11 @@
+const endPointRoot = "http://localhost:8000/";// TODO: Change localhost to the server's address
+const resource = "search/";
 class Search {
     getResults(query) {
+        let params = "?word=" + query;
+        const url = endPointRoot + resource + params
         // TODO: Change localhost to the server's address
-        xhr.open("GET", `http://localhost:8000/?word=` + query, true);
+        xhr.open("GET", url, true);
         xhr.send();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {

@@ -1,15 +1,17 @@
 import message from "../user.js";
-
+const endPointRoot = "http://localhost:8000/";// TODO: Change localhost to the server's address
+const resource = "create/";
 class Store {
     createWord(word, definition) {
-        // TODO: Change localhost to the server's address
-        xhr.open("POST", "http://localhost:8000", true);
+        xhr.open("POST", endPointRoot + resource, true);
         // Set to text/plain because otherwise the server receives a preflight request
         xhr.setRequestHeader("Content-Type", "text/plain");
         xhr.send("word=" + word + "&definition=" + definition);
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 document.getElementById("response").innerHTML = xhr.responseText;
+            } else {
+                document.getElementById("response").innerHTML = message.processError;
             }
         };
     }
