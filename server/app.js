@@ -53,15 +53,15 @@ http.createServer((req, res) => {
                         wordExists = true;
                         return;
                     }
-                    if (wordExists) {
-                        // If word exists, inform user
-                        res.end(message.warning.replace("%s", word));
-                    } else {
-                        // If word does not exist, add word
-                        dictionary.push(`${word}:${definition}`);
-                        res.end(`${message.count.replace("%s", requestCount)}${message.success.replace("%s", word).replace("%t", definition)}`);
-                    }
                 });
+                if (wordExists) {
+                    // If word exists, inform user
+                    res.end(message.warning.replace("%s", word));
+                } else {
+                    // If word does not exist, add word
+                    dictionary.push(`${word}:${definition}`);
+                    res.end(`${message.count.replace("%s", requestCount)}${message.success.replace("%s", word).replace("%t", definition)}`);
+                }
             }
         });
     }
