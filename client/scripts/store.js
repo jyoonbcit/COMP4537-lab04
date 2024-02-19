@@ -1,5 +1,5 @@
 import message from "../user.js";
-const endPointRoot = "http://localhost:8000/";// TODO: Change localhost to the server's address
+const endPointRoot = "https://comp-4537-lab04.vercel.app/";// TODO: Change localhost to the server's address
 const resource = "create/";
 class Store {
     createWord(word, definition) {

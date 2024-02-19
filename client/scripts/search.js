@@ -1,9 +1,9 @@
-const endPointRoot = "http://localhost:8000/";// TODO: Change localhost to the server's address
+const endPointRoot = "https://comp-4537-lab04.vercel.app/";// TODO: Change localhost to the server's address
 const resource = "search/";
 class Search {
     getResults(query) {
-        let params = "?word=" + query;
-        const url = endPointRoot + resource + params
+        let params = "?word=" + resource + query;
+        const url = endPointRoot + params
         // TODO: Change localhost to the server's address
         xhr.open("GET", url, true);
         xhr.send();
