@@ -54,7 +54,7 @@ http.createServer((req, res) => {
                     } else {
                         // If word does not exist, add word
                         dictionary.push(`${word}:${definition}`);
-                        res.end(`${message.count}.replace(%s, ${requestCount})` + `${message.success}.replace(%s, %t, ${word}, ${definition})`);
+                        res.end(`${message.count.replace("%s", requestCount)}${message.success.replace("%s", word).replace("%t", definition)}`);
                     }
                 });
             }

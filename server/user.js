@@ -3,7 +3,7 @@ const message = {
     searchError: "Error! Word not found.",
     warning: "Warning! %s already exists.",
     count: "Request # %s",
-    success: 'New entry recorded /n "%s: %t"'
+    success: '<br>New entry recorded<br>"%s: %t"'
 }
 
 module.exports = message;
