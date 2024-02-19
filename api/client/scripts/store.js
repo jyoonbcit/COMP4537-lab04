@@ -1,5 +1,5 @@
 import message from "../user.js";
-const endPointRoot = "https://comp-4537-lab04.netlify.app/server.js";
+const endPointRoot = "https://comp-4537-lab04.netlify.app/";
 class Store {
     createWord(word, definition) {
         xhr.open("POST", endPointRoot, true);
