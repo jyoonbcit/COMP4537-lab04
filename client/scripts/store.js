@@ -1,20 +1,17 @@
+import message from "../user.js";
+
 class Store {
     createWord(word, definition) {
+        // TODO: Change localhost to the server's address
         xhr.open("POST", "http://localhost:8000", true);
+        // Set to text/plain because otherwise the server receives a preflight request
         xhr.setRequestHeader("Content-Type", "text/plain");
-        // xhr.send("word=" + word + "&definition=" + definition);
-        xhr.send(JSON.stringify({word: word, definition: definition}));
+        xhr.send("word=" + word + "&definition=" + definition);
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                console.log("Response received.")
                 document.getElementById("response").innerHTML = xhr.responseText;
             }
         };
-        // xhr.onload = function() {
-        //     console.log("Response received.")
-        //     document.getElementById("response").innerHTML = xhr.responseText;
-        // };
-        console.log("Word created.");
     }
 }
 
@@ -25,7 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("create-word").addEventListener("click", () => {
         let word = document.getElementById("word").value;
         let definition = document.getElementById("definition").value;
-        store.createWord(word, definition);
+        if (word === "" || definition === "" || !word.match(/^[a-zA-Z]+$/)) {
+            console.log(word === "");
+            console.log(definition === "");
+            console.log(!word.match(/^[a-zA-Z]+$/));
+            document.getElementById("response").innerHTML = message.validationError;
+            return;
+        } else {
+            store.createWord(word, definition);
+        }
     });
 });
 
