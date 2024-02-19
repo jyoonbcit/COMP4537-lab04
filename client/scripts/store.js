@@ -1,9 +1,8 @@
 import message from "../user.js";
-const endPointRoot = "https://comp-4537-lab04.vercel.app/";// TODO: Change localhost to the server's address
-const resource = "create/";
+const endPointRoot = "https://comp-4537-lab04.vercel.app/";
 class Store {
     createWord(word, definition) {
-        xhr.open("POST", endPointRoot + resource, true);
+        xhr.open("POST", endPointRoot, true);
         // Set to text/plain because otherwise the server receives a preflight request
         xhr.setRequestHeader("Content-Type", "text/plain");
         xhr.send("word=" + word + "&definition=" + definition);
