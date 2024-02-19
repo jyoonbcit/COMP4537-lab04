@@ -44,13 +44,18 @@ http.createServer((req, res) => {
                 res.end(`${word}: ${definition}`);
             } else {
                 // If dictionary is not empty, check if word exists
+                let wordExists = false;
                 dictionary.forEach(entry => {
                     console.log(entry);
                     let wordKey = entry.split(":")[0];
                     console.log(wordKey);
-                    // If word exists, inform user
                     if (wordKey === word) {
-                        res.end(`${message.warning.replace("%s", word)}`);
+                        wordExists = true;
+                        return;
+                    }
+                    if (wordExists) {
+                        // If word exists, inform user
+                        res.end(message.warning.replace("%s", word));
                     } else {
                         // If word does not exist, add word
                         dictionary.push(`${word}:${definition}`);
