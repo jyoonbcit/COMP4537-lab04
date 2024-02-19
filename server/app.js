@@ -1,38 +1,61 @@
 const http = require('http');
 const url = require('url');
-const message = require("../user.js");
+const message = require("./user.js");
 
 let dictionary = [];
 
 http.createServer((req, res) => {
-    let q = url.parse(req.url, true);
     res.writeHead(200, {
-        "Content-Type": "text/html",
+        "Content-Type": "text/html, text/plain",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST"
     })
     if (req.method === "GET") {
-        // TODO: Replace hardcoded strings
-        console.log(`Search received: ${q.query.word}`);
-        res.end("Response from server received.");
-    } else if (req.method === "POST") {
-        // TODO: Replace console.log
-        console.log("POST request received.");
-        // let body = "";
-        let word = q.query.word;
-        let definition = q.query.definition;
-        // req.on("data", (chunk) => {
-        //     body += chunk;
-        // });
-        req.on("end", () => {
-            // let q = url.parse(body, true);
-            res.end(`${word}: ${definition}`);
-        });
-        if (word in dictionary) {
-            // res.end(`${message.warning}.replace(%s, ${word})`);
-            // TODO: Replace response
-            res.end("Word already exists in dictionary.");
+        let q = url.parse(req.url, true);
+        if (q.query.word) {
+            let word = q.query.word;
+            if (dictionary.length === 0) {
+                res.end(message.dictionaryEmptyError);
+            } else {
+                dictionary.forEach(entry => {
+                    let wordKey = entry.split(":")[0];
+                    if (wordKey === word) {
+                        res.end(entry);
+                    } else {
+                        res.end(message.searchError);
+                    }
+                });
+            }
         }
-        dictionary.push(`${word}: ${definition}`)
+    } else if (req.method === "POST") {
+        let body = "";
+        req.on("data", (chunk) => {
+            body += chunk;
+        });
+        req.on("end", () => {
+            let params = new URLSearchParams(body);
+            let word = params.get("word");
+            let definition = params.get("definition");
+            // If dictionary is empty, add word
+            if (dictionary.length === 0) {
+                dictionary.push(`${word}: ${definition}`);
+                res.end(`${word}: ${definition}`);
+            } else {
+                // If dictionary is not empty, check if word exists
+                dictionary.forEach (entry => {
+                    console.log(entry);
+                    let wordKey = entry.split(":")[0];
+                    console.log(wordKey);
+                    // If word exists, inform user
+                    if (wordKey === word) {
+                        res.end(`${message.warning.replace("%s", word)}`);
+                    } else {
+                        // If word does not exist, add word
+                        dictionary.push(`${word}:${definition}`);
+                        res.end(`${word}: ${definition}`);
+                    }
+                });
+            }
+        });
     }
 }).listen(8000);
