@@ -1,5 +1,5 @@
 import message from "../user.js";
-const endPointRoot = "https://comp-4537-lab04.vercel.app/";
+const endPointRoot = "http://localhost:8000";
 class Store {
     createWord(word, definition) {
         xhr.open("POST", endPointRoot, true);
