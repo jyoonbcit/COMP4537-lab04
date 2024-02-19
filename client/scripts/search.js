@@ -1,7 +1,7 @@
 class Search {
     getResults(query) {
         // TODO: Change localhost to the server's address
-        xhr.open("GET", "http://localhost:8000", true);
+        xhr.open("GET", `http://localhost:8000/?word=` + query, true);
         xhr.send();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -11,8 +11,7 @@ class Search {
     }
 
     displayResults(results) {
-        document.getElementById("response-word").innerHTML = results.word;
-        document.getElementById("response-definition").innerHTML = results.definition;
+        document.getElementById("response").innerHTML = results;
     }
 }
 
